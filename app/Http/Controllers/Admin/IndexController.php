@@ -12,6 +12,6 @@ class IndexController extends Controller
         $this->AiModel=$AiModel;
     }
     public function index(){
-        return view('admin.index.index');theanh
+        return view('admin.index.index');
     }
 }
