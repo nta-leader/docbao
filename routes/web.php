@@ -1,0 +1,56 @@
+<?php
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::namespace('Admin')->prefix('admin')->group(function(){
+    Route::prefix('index')->group(function(){
+        Route::get('',[
+            'uses'=>'IndexController@index',
+            'as'=>'admin.index.index'
+        ]);
+    });
+    Route::prefix('danhmuc')->group(function(){
+        Route::get('index',[
+            'uses'=>'DanhmucController@index',
+            'as'=>'admin.danhmuc.index'
+        ]);
+        Route::get('add',[
+            'uses'=>'DanhmucController@add',
+            'as'=>'admin.danhmuc.add'
+        ]);
+        Route::get('edit',[
+            'uses'=>'DanhmucController@edit',
+            'as'=>'admin.danhmuc.edit'
+        ]);
+        Route::post('edit',[
+            'uses'=>'DanhmucController@postEdit',
+            'as'=>'admin.danhmuc.edit'
+        ]);
+        Route::get('del/{id}',[
+            'uses'=>'DanhmucController@del',
+            'as'=>'admin.danhmuc.del'
+        ]);
+    });
+    Route::prefix('tintuc')->group(function(){
+        Route::get('index',[
+            'uses'=>'TintucController@index',
+            'as'=>'admin.tintuc.index'
+        ]);
+        Route::get('add',[
+            'uses'=>'TintucController@add',
+            'as'=>'admin.tintuc.add'
+        ]);
+        Route::get('edit',[
+            'uses'=>'TintucController@edit',
+            'as'=>'admin.tintuc.edit'
+        ]);
+        Route::post('edit',[
+            'uses'=>'TintucController@postEdit',
+            'as'=>'admin.tintuc.edit'
+        ]);
+        Route::get('del/{id}',[
+            'uses'=>'TintucController@del',
+            'as'=>'admin.tintuc.del'
+        ]);
+    });
+});
