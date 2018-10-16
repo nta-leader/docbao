@@ -28,60 +28,77 @@
 </style>
     <div class="row">
         <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">
-                <a onclick="them()" data-toggle="modal" data-target="#modal-default" class="btn btn-success btn-md" title="Thêm danh mục cha">Thêm</a>
-              </h3>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title" style="display: block;text-align: center;">100 tin mới nhất</h3>
+                    <h3 class="box-title">
+                        <a onclick="them()" data-toggle="modal" data-target="#modal-default" class="btn btn-success btn-md" title="Thêm danh mục cha">Thêm</a>
+                    </h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên tin tức</th>
+                                <th>Danh mục</th>
+                                <th>Giới thiệu</th>                               
+                                <th>Ngày tạo</th>
+                                <th class="center">Hình ảnh</th>
+                                <th class="center">Trạng thái</th>
+                                <th class="center">Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($objItems as $objItem)
+                        @php
+                            $id=$objItem->tintuc_id;
+                            $name=$objItem->tentintuc;
+                            $danhmuc=$objItem->tendanhmuc;
+                            $gioithieu=$objItem->gioithieu;
+                            $date=$objItem->ngaytao;
+                            $picture=$objItem->hinhanh;
+                            $active=$objItem->active;
+                            $urlEdit="";
+                            $urlDel="";
+                        @endphp
+                            <tr>
+                                <td>{{$id}}</td>
+                                <td style="width:20%;">{{$name}}</td>
+                                <td>{{$danhmuc}}</td>
+                                <td style="width:20%;">{{$gioithieu}}</td>
+                                <td>{{$date}}</td>
+                                <td>
+                                    <center>
+                                        <img src="/storage/app/files/{{$picture}}">
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                    @if($active==1)
+                                        <a class="btn btn-primary">Hiện thị</a>
+                                    @else
+                                        <a class="btn btn-danger">Đã ẩn</a>
+                                    @endif
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                        <a class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a>
+                                        <a class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                    </center>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding">
-               
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                  <td>C</td>
-                </tr>
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+            <!-- /.box -->
         </div>
-      </div>
+    </div>
 @endsection
 @section('modal')
 <style>
