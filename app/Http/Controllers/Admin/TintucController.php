@@ -12,6 +12,7 @@ class TintucController extends Controller
         $this->AtModel=$AtModel;
     }
     public function index(){
-        return view('admin.tintuc.index');
+        $objItems=$this->AtModel->getAll();
+        return view('admin.tintuc.index',compact('objItems'));
     }
 }
