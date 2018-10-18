@@ -30,9 +30,15 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title" style="display: block;text-align: center;">100 tin mới nhất</h3>
+                    <h3 class="box-title" style="display: block;text-align: center;">
+                        @if(isset($_GET['Page']))
+                            {{getenv("PAGE_ADMIN")}} tin tiếp theo
+                        @else
+                        {{getenv("PAGE_ADMIN")}} tin mới nhât
+                        @endif
+                    </h3>
                     <h3 class="box-title">
-                        <a onclick="them()" data-toggle="modal" data-target="#modal-default" class="btn btn-success btn-md" title="Thêm danh mục cha">Thêm</a>
+                        <a href="{{route("admin.tintuc.add")}}" class="btn btn-success btn-md" title="Thêm danh mục cha">Thêm</a>
                     </h3>
                 </div>
                 <!-- /.box-header -->
