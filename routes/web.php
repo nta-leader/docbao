@@ -40,6 +40,10 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
             'uses'=>'TintucController@add',
             'as'=>'admin.tintuc.add'
         ]);
+        Route::post('add',[
+            'uses'=>'TintucController@postAdd',
+            'as'=>'admin.tintuc.add'
+        ]);
         Route::get('edit',[
             'uses'=>'TintucController@edit',
             'as'=>'admin.tintuc.edit'
