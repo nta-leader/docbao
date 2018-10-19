@@ -48,6 +48,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tên tin tức</th>
+                                <th>Lượt xem</th>
                                 <th>Danh mục</th>
                                 <th>Giới thiệu</th>                               
                                 <th>Ngày tạo</th>
@@ -61,23 +62,25 @@
                         @php
                             $id=$objItem->tintuc_id;
                             $name=$objItem->tentintuc;
+                            $luotxem=$objItem->luotxem;
                             $danhmuc=$objItem->tendanhmuc;
                             $gioithieu=$objItem->gioithieu;
                             $date=$objItem->ngaytao;
                             $picture=$objItem->hinhanh;
                             $active=$objItem->active;
-                            $urlEdit="";
+                            $urlEdit=route('admin.tintuc.edit',['tintuc_id'=>$id]);
                             $urlDel="";
                         @endphp
                             <tr>
                                 <td>{{$id}}</td>
                                 <td style="width:20%;">{{$name}}</td>
+                                <td>{{$luotxem}}</td>
                                 <td>{{$danhmuc}}</td>
-                                <td style="width:20%;">{{$gioithieu}}</td>
+                                <td style="width:20%;">{{$gioithieu}}</td>                              
                                 <td>{{$date}}</td>
                                 <td>
                                     <center>
-                                        <img src="/storage/app/files/{{$picture}}">
+                                        <img width="100px" src="/storage/app/files/{{$picture}}">
                                     </center>
                                 </td>
                                 <td>
@@ -91,8 +94,8 @@
                                 </td>
                                 <td>
                                     <center>
-                                        <a class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a>
-                                        <a class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                        <a href="{{$urlEdit}}" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a>
+                                        <a href="{{$urlDel}}" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
                                     </center>
                                 </td>
                             </tr>

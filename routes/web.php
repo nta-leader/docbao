@@ -1,6 +1,9 @@
 <?php
-Route::get('/', function () {
-    return view('welcome');
+Route::namespace('Docbao')->group(function(){
+    Route::get('/',[
+        'uses'=>'IndexController@index',
+        'as'=>'docbao.index'
+    ]);
 });
 Route::namespace('Admin')->prefix('admin')->group(function(){
     Route::prefix('index')->group(function(){
@@ -44,13 +47,13 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
             'uses'=>'TintucController@postAdd',
             'as'=>'admin.tintuc.add'
         ]);
-        Route::get('edit',[
+        Route::get('edit/{tintuc_id}',[
             'uses'=>'TintucController@edit',
             'as'=>'admin.tintuc.edit'
         ]);
         Route::post('edit',[
             'uses'=>'TintucController@postEdit',
-            'as'=>'admin.tintuc.edit'
+            'as'=>'admin.tintuc.postedit'
         ]);
         Route::get('del/{id}',[
             'uses'=>'TintucController@del',

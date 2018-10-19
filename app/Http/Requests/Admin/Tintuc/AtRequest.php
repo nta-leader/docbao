@@ -26,9 +26,10 @@ class AtRequest extends FormRequest
         return [
             "tentintuc"=>"required | min:4 | max:255 | unique:tintuc,tentintuc",
             "danhmuc_id"=>"required",
-            "hinhanh"=>"required | image",
+            "hinhanh"=>"required | image | max:10240",
             "gioithieu"=>"required",
-            "chitiet"=>"required"
+            "chitiet"=>"required",
+            "active"=>"required"
         ];
     }
     public function messages()
@@ -41,8 +42,10 @@ class AtRequest extends FormRequest
             "danhmuc_id.required"=>"Vui lòng chọn danh mục !",
             "hinhanh.required"=>"Vui lòng chọn 1 hình ảnh !",
             "hinhanh.image"=>"Chọn file đúng định dạng hình ảnh !",
+            "hinhanh.max"=>"Kích thước file quá lớn( Chọn file nhỏ hơn 10MB ) !",
             "gioithieu.required"=>"Vui lòng nhập giới thiệu !",
-            "chitiet.required"=>"Vui lòng nhập chi tiết !"
+            "chitiet.required"=>"Vui lòng nhập chi tiết !",
+            "active.required"=>"Vui lòng chọn trạng thái !"
         ];
     }
 }
