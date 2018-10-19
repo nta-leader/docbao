@@ -1,4 +1,5 @@
 @extends('templates.admin.master')
+@include('functions.indanhmuc')
 @section('css')
     <link rel="stylesheet" href="{{$urlAdmin}}/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{$urlAdmin}}/bower_components/font-awesome/css/font-awesome.min.css">
@@ -35,7 +36,7 @@
 <div class="box box-warning">
     <!-- /.box-header -->
     <div class="box-body">
-        <form action="{{route("admin.tintuc.add")}}" method="POST" role="form" style="margin: 30px 5% 30px 5%;">
+        <form action="{{route("admin.tintuc.add")}}" method="POST" enctype="multipart/form-data" role="form" style="margin: 30px 5% 30px 5%;">
             <!-- Ten tin tuc -->
             {{csrf_field()}}
             <div class="form-group">
@@ -62,8 +63,8 @@
                 </div>
                 @endif
                 <select name="danhmuc_id" class="form-control">
-                    <option value="">option 1</option>
-                    <option value="1">option 2</option>
+                    <option value="">--Chọn danh mục--</option>
+                    {{ indanhmuc($objDanhmuccha,$objDanhmuccon) }}
                 </select>
             </div>
             <!-- hinh anh -->
@@ -77,7 +78,7 @@
                     @endforeach
                 </div>
                 @endif
-                <input type="file" name="hinhanh" class="form-control">
+                <input type="file" name="hinhanh"  value="{{ old('hinhanh') }}" class="form-control">
             </div>
             <!-- Gioi thieu -->
             <div class="form-group">
@@ -110,7 +111,7 @@
             <!-- active -->
             <div class="form-group">
                 @if ($errors->has('active'))
-                <div class="alert alert-danger alert-dismissible">
+                <div class="alert alert-danger alert-dismissible loi">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     @foreach ($loi['active'] as $error)
                         <p><i class="icon fa fa-ban"></i>{{$error}}</p>
@@ -118,11 +119,11 @@
                 </div>
                 @endif
                 <label>
-                    <input type="radio" name="active" id="optionsRadios1" value="option1" checked="">
+                    <input type="radio" name="active" id="optionsRadios1" value="0" @if(old("active")=="0")) checked @endif >
                     Ẩn
                 </label>
                 <label style="margin-left:25px;">
-                    <input type="radio" name="active" id="optionsRadios2" value="option2">
+                    <input type="radio" name="active" id="optionsRadios2" value="1" @if(old("active")=="1")) checked @endif >
                     Hiện
                 </label>
             </div>

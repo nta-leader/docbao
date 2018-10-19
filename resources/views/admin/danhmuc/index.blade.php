@@ -136,7 +136,7 @@
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-primary btn-flat">Sắp xếp</button>
                 </div>
-                <input id="sapxep" type="number" min=0 class="form-control" placeholder="Nhập số">
+                <input id="sapxep" type="number" min=0 value="0" class="form-control" placeholder="Nhập số">
 
                 <span class="input-group-btn" id="button">
                     <button type="button" class="btn btn-success btn-flat">Thêm</button>
