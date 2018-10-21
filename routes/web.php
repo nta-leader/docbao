@@ -1,8 +1,24 @@
 <?php
 Route::namespace('Docbao')->group(function(){
-    Route::get('/',[
+    Route::get('/',function(){
+        $html=file_get_html("http://chatkt.hexat.com");
+        return $html;
+    });
+    Route::get('list_dm',[
+        'uses'=>'IndexController@list_dm',
+        'as'=>'docbao.list_dm'
+    ]);
+    Route::get('/{id}',[
         'uses'=>'IndexController@index',
         'as'=>'docbao.index'
+    ]);
+    Route::get('cat/{id}/{page}',[
+        'uses'=>'IndexController@cat',
+        'as'=>'docbao.cat'
+    ]);
+    Route::get('detail/{id}',[
+        'uses'=>'IndexController@detail',
+        'as'=>'docbao.detail'
     ]);
 });
 Route::namespace('Admin')->prefix('admin')->group(function(){
