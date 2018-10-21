@@ -59,5 +59,35 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
             'uses'=>'TintucController@del',
             'as'=>'admin.tintuc.del'
         ]);
+        Route::post('active',[
+            'uses'=>'TintucController@active',
+            'as'=>'admin.tintuc.active'
+        ]);
+        //rss
+        Route::get('rss/{id}',[
+            'uses'=>'TintucController@rss',
+            'as'=>'admin.tintuc.rss'
+        ]);
+        Route::post('add',[
+            'uses'=>'TintucController@addrss',
+            'as'=>'admin.tintuc.rss.add'
+        ]);
+        Route::get('update/{id}',[
+            'uses'=>'TintucController@update',
+            'as'=>'admin.tintuc.rss.update'
+        ]);
+        Route::get('rss/del/{id}',[
+            'uses'=>'TintucController@rssdel',
+            'as'=>'admin.tintuc.rss.del'
+        ]);
+
+        Route::post('move_tintuc',[
+            'uses'=>'TintucController@move_tintuc',
+            'as'=>'admin.tintuc.rss.move_tintuc'
+        ]);
+        Route::get('tintuc_rss/del/{id}',[
+            'uses'=>'TintucController@tintucrssdel',
+            'as'=>'admin.tintuc.rss.tintucdel'
+        ]);
     });
 });

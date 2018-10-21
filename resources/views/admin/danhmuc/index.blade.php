@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{{$urlAdmin}}/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="{{$urlAdmin}}/dist/css/skins/skin-blue.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link rel="stylesheet" type="text/css" href="{{$urlAdmin}}/sweetalert.css">
 @endsection
 @section('name')
     Quản lý danh mục

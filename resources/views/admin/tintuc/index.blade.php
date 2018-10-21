@@ -39,9 +39,11 @@
                     </h3>
                     <h3 class="box-title">
                         <a href="{{route("admin.tintuc.add")}}" class="btn btn-success btn-md" title="Thêm danh mục cha">Thêm</a>
+                        <a href="{{route("admin.tintuc.rss",["id"=>"0"])}}" class="btn btn-success btn-md" title="Thêm danh mục cha">RSS</a>
                     </h3>
                 </div>
                 <!-- /.box-header -->
+                <form action="{{route('admin.tintuc.del',['tintuc_id'=>'0'])}}">
                 <div class="box-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -52,6 +54,7 @@
                                 <th>Danh mục</th>
                                 <th>Giới thiệu</th>                               
                                 <th>Ngày tạo</th>
+                                <th>Nguồn</th>
                                 <th class="center">Hình ảnh</th>
                                 <th class="center">Trạng thái</th>
                                 <th class="center">Chức năng</th>
@@ -66,43 +69,50 @@
                             $danhmuc=$objItem->tendanhmuc;
                             $gioithieu=$objItem->gioithieu;
                             $date=$objItem->ngaytao;
+                            $nguon=$objItem->nguon;
                             $picture=$objItem->hinhanh;
                             $active=$objItem->active;
                             $urlEdit=route('admin.tintuc.edit',['tintuc_id'=>$id]);
-                            $urlDel="";
+                            $urlDel=route('admin.tintuc.del',['tintuc_id'=>$id]);
                         @endphp
                             <tr>
-                                <td>{{$id}}</td>
+                                <td>
+                                    <input type="checkbox" name="arId[]" value="{{$id}}">
+                                    <span style="font-size: 18px;margin-left: 5px;">{{$id}}<span>
+                                </td>
                                 <td style="width:20%;">{{$name}}</td>
                                 <td>{{$luotxem}}</td>
                                 <td>{{$danhmuc}}</td>
                                 <td style="width:20%;">{{$gioithieu}}</td>                              
                                 <td>{{$date}}</td>
+                                <td>{{$nguon}}</td>
                                 <td>
                                     <center>
                                         <img width="100px" src="/storage/app/files/{{$picture}}">
                                     </center>
                                 </td>
-                                <td>
+                                <td id="active{{$id}}">
                                     <center>
                                     @if($active==1)
-                                        <a class="btn btn-primary">Hiện thị</a>
+                                        <a onclick="active('1','{{$id}}')" class="btn btn-primary">Hiện thị</a>
                                     @else
-                                        <a class="btn btn-danger">Đã ẩn</a>
+                                        <a onclick="active('0','{{$id}}')" class="btn btn-danger">Đã ẩn</a>
                                     @endif
                                     </center>
                                 </td>
                                 <td>
                                     <center>
                                         <a href="{{$urlEdit}}" class="btn btn-primary"><i class="fa fa-edit"></i> Sửa</a>
-                                        <a href="{{$urlDel}}" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
+                                        <a onclick="del('{{$urlDel}}','')" class="btn btn-danger"><i class="fa fa-pencil"></i> Xóa</a>
                                     </center>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    <button type="submit" onclick="return confirm('Bạn thực sự muốn xóa các bản ghi đã chọn?')" class="btn btn-danger">Xóa các tin đã chọn</a>
                 </div>
+                </form>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
@@ -110,90 +120,7 @@
     </div>
 @endsection
 @section('modal')
-<style>
-    .border_radius{
-        border-radius:5px;
-    }
-    .msg_modal{
-        margin: 5px 0px -15px 0px;
-        padding: 10px 33px 10px 10px;
-    }
-</style>
-<div class="modal fade" id="modal-default" style="display: none;">
-    <div class="modal-dialog">
-    <div class="modal-content border_radius">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-            <h3 class="modal-title" style="color:#00a65a;" id="name">name</h3>
-            <div id="msg">
-                
-            </div>
-        </div>
-        <div class="modal-body" id="modal-body">
-            <div class="input-group">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-primary btn-flat">Tên danh mục</button>
-                </div>
-                <input id="tendanhmuc" type="text" class="form-control" placeholder="Nhập tên">
 
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-primary btn-flat">Sắp xếp</button>
-                </div>
-                <input id="sapxep" type="number" min=0 class="form-control" placeholder="Nhập số">
-
-                <span class="input-group-btn" id="button">
-                    <button type="button" class="btn btn-success btn-flat">Thêm</button>
-                </span>
-            </div>
-        </div>
-        <div class="modal-footer center">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
-        </div>
-    </div>
-    <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- sua danhmuc -->
-<div class="modal fade" id="modal-edit" style="display: none;">
-    <div class="modal-dialog">
-    <div class="modal-content border_radius">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-            <h3 class="modal-title" style="color:#00a65a;" id="name">Sửa danh mục</h3>
-            <div id="msg">
-                
-            </div>
-        </div>
-        <div class="modal-body" id="modal-body">
-            <div class="input-group">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-primary btn-flat">Tên danh mục</button>
-                </div>
-                <input id="tendanhmuc_e" type="text" class="form-control" placeholder="Nhập tên">
-
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-primary btn-flat">Sắp xếp</button>
-                </div>
-                <input id="sapxep_e" type="number" min=0 class="form-control" placeholder="Nhập số">
-                <input style="display:none;" id="parent_id_e" type="number" value="" min=1 class="form-control" placeholder="Nhập số">
-                <span class="input-group-btn" id="button_e">
-                    <button type="button" class="btn btn-success btn-flat">Sửa</button>
-                </span>
-            </div>
-        </div>
-        <div class="modal-footer center">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
-        </div>
-    </div>
-    <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
 @endsection
 @section('js')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -227,79 +154,31 @@
   })
 </script>
    <script>
-        function them(parent_id=0){
-            if(parent_id==0){
-                document.getElementById("name").innerHTML = "Thêm danh mục cha";
-            }else{
-                document.getElementById("name").innerHTML = "Thêm danh mục con";
-            }
-            document.getElementById("button").innerHTML = '<button onclick="add('+parent_id+')" type="button" class="btn btn-success btn-flat">Thêm</button>';
-        }
-        function sua(danhmuc_id,tendanhmuc,sapxep,parent_id){
-            document.getElementById("tendanhmuc_e").value = tendanhmuc;
-            document.getElementById("sapxep_e").value = sapxep;
-            document.getElementById("parent_id_e").value = parent_id;
-            document.getElementById("button_e").innerHTML = '<button onclick="edit('+danhmuc_id+')" type="button" class="btn btn-success btn-flat">sửa</button>'; 
-        }
-        function add(parent_id){
-            tendanhmuc=document.getElementById("tendanhmuc").value;
-            sapxep=document.getElementById("sapxep").value;
-            if(tendanhmuc != '' && sapxep != '' && tendanhmuc != ' ' && sapxep != ' '){
-                $.ajax({
-                    url: '{{route('admin.danhmuc.add')}}',
-                    type: 'get',
-                    cache: false,
-                    data: {
-                        parent_id:parent_id,
-                        tendanhmuc:tendanhmuc,
-                        sapxep:sapxep
-                    },
-                    success: function(data){
-                        $('#msg').html(data);
-                    },
-                    error: function (){
-                        alert('Có lỗi xảy ra');
-                    }
-                });
-            }else{
-                swal("Không được để rỗng !", "", "error");
-            }
-        } 
-        function edit(danhmuc_id){
+        function active(active,tintuc_id){
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            tendanhmuc=document.getElementById("tendanhmuc_e").value;
-            sapxep=document.getElementById("sapxep_e").value;
-            parent_id=document.getElementById("parent_id_e").value;
-            if(tendanhmuc != '' && sapxep != '' && tendanhmuc != ' ' && sapxep != ' '){
-                $.ajax({
-                    url: '{{route('admin.danhmuc.edit')}}',
-                    type: 'post',
-                    cache: false,
-                    data: {
-                        danhmuc_id:danhmuc_id,
-                        parent_id:parent_id,
-                        tendanhmuc:tendanhmuc,
-                        sapxep:sapxep
-                    },
-                    success: function(data){
-                        $('#msg').html(data);
-                    },
-                    error: function (){
-                        alert('Có lỗi xảy ra');
-                    }
-                });
-            }else{
-                swal("Không được để rỗng !", "", "error");
-            }
+            $.ajax({
+                url: '{{route('admin.tintuc.active')}}',
+                type: 'post',
+                cache: false,
+                data: {
+                    active:active,
+                    tintuc_id:tintuc_id
+                },
+                success: function(data){
+                    $('#active'+tintuc_id).html(data);
+                },
+                error: function (){
+                    swal("Có lỗi xảy ra !","","error");
+                }
+            });
         }
-        function del(url){
+        function del(url,title){
             swal({   
-                title: "Bạn có muốn xóa danh mục này không ?",
-                text: "Danh mục này có 10 bài viết",         
+                title: "Bạn có muốn xóa "+title+" tin tức này không ?",
                 type: "warning",   
                 showCancelButton: true,   
                 confirmButtonColor: "#DD6B55",   

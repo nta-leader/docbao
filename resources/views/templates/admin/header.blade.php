@@ -6,6 +6,7 @@
     <title>AdminLTE 2 | Starter</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     @yield('css')
+    <link rel="stylesheet" type="text/css" href="{{$urlAdmin}}/sweetalert.css">
     <script type="text/javascript" src="{{$urlAdmin}}/sweetalert-dev.js"></script>
 </head>
 
