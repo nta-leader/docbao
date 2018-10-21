@@ -59,7 +59,7 @@
                     @endforeach
                 </div>
                 @endif
-                <input type="text" name="tentintuc" @if(old('tentintuc')) value="{{ old('tentintuc') }}" @else value="{{$tentintuc}}" @endif class="form-control" placeholder="Nhập tên tin tức ...">
+                <textarea name="tentintuc" class="form-control" rows="1" placeholder="Nhập giới thiệu tin tức...">@if(old('tentintuc')){{ old('tentintuc') }}@else{!!$tentintuc!!}@endif</textarea>
             </div>
             <!-- Ten danh muc -->
             <div class="form-group">
@@ -106,7 +106,7 @@
                     @endforeach
                 </div>
                 @endif
-                <textarea name="gioithieu" class="form-control" rows="3" placeholder="Nhập giới thiệu tin tức...">@if(old('gioithieu')){{ old('gioithieu') }}@else{{$gioithieu}}@endif</textarea>
+                <textarea name="gioithieu" class="form-control" rows="3" placeholder="Nhập giới thiệu tin tức...">@if(old('gioithieu')){{ old('gioithieu') }}@else{!!$gioithieu!!}@endif</textarea>
             </div>
             <!-- Chi tiet -->
             <div class="form-group">
