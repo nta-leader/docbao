@@ -11,19 +11,7 @@ use DB;
 class IndexController extends Controller
 {
     public function list_dm(AdModel $cat){
-        $objCha=$cat->getList_cha();
-        $objCon=$cat->getList_con();
-        foreach($objCha as $cha){
-            $arItem[$cha->danhmuc_id]=$cha->toArray();
-            $i=0;
-            foreach($objCon as $con){
-                if($cha->danhmuc_id==$con->parent_id){
-                    $arItem[$cha->danhmuc_id]['con'][$con->danhmuc_id]=$con->toArray();
-                    $i++;
-                }
-            }
-            if($i==0){ $arItem[$cha->danhmuc_id]['con']=""; }
-        }
+        $arItem=DB::table('danhmuc')->get();
         $responsecode = 200;
         $header = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
@@ -43,8 +31,18 @@ class IndexController extends Controller
         return $json;
     }
     public function cat($id,$page){
-        $arId=DB::table('danhmuc')->where('danhmuc_id',$id)->orWhere('parent_id',$id)->get()->toArray();
-        $arItem=DB::table('tintuc')->where('active',1)->whereIn('danhmuc_id',$arId)->select('tintuc_id','tentintuc','gioithieu','hinhanh')->skip($page*20-20)->take(20)->get();
+        $arId=DB::table('danhmuc')->where('danhmuc_id',$id)->orWhere('parent_id',$id)->select('danhmuc_id')->get();
+        $id=[0=>0];
+        foreach ($arId as $value) {
+            $id[]=$value->danhmuc_id;
+        }
+        $arItem=DB::table('tintuc')
+        ->where('active',1)
+        ->whereIn('danhmuc_id',$id)
+        ->select('tintuc_id','tentintuc','gioithieu','hinhanh')
+        ->skip($page*20-20)
+        ->take(20)
+        ->get();
         $responsecode = 200;
         $header = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
