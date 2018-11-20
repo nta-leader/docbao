@@ -29,6 +29,7 @@
                             <span>Quản lý tin tức</span>
                         </a>
                     </li>
+                    <!--
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-pie-chart"></i>
@@ -199,5 +200,6 @@
                     <li>
                         <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a>
                     </li>
+                -->
                 </ul>
             </section>

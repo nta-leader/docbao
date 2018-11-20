@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\Tintuc\AtRequest;
 use App\Http\Requests\Admin\Tintuc\AteRequest;
 use Response;
 use Storage;
+use DB;
 
 class TintucController extends Controller
 {
@@ -41,9 +42,10 @@ class TintucController extends Controller
             "hinhanh"=>$hinhanh,
             "gioithieu"=>trim($req->gioithieu),
             "chitiet"=>trim($req->chitiet),
+            "text"=>trim($req->text),
             "ngaytao"=>$date,
             "luotxem"=>0,
-            "nguon"=>route('docbao.index'),
+            "nguon"=>route('docbao'),
             "active"=>trim($req->active)
         ];
         $this->AtModel->add($arItem);
@@ -82,6 +84,7 @@ class TintucController extends Controller
             "danhmuc_id"=>trim($req->danhmuc_id),
             "hinhanh"=>$hinhanh,
             "gioithieu"=>trim($req->gioithieu),
+            "text"=>trim($req->text),
             "chitiet"=>trim($req->chitiet),
             "active"=>trim($req->active)
         ];
@@ -171,13 +174,19 @@ class TintucController extends Controller
             //lay detail
             $html_detail=file_get_html("https://dantri.com.vn/".$href);
             $detail=$html_detail->find("div.detail-content",0);
-            
+            if($detail != null){
+                $text=trim($detail->plaintext);
+            }else{
+                $text=null;
+                continue;
+            }
             $arItem=[
                 'name'=>$tentintuc,
                 'rss_id'=>$id,
                 'picture'=>$picture,
                 'preview'=>$goithieu,
                 'detail'=>$detail,
+                'text'=>$text,
                 'active'=>0,
                 'date'=>$date
             ];
@@ -196,6 +205,7 @@ class TintucController extends Controller
             "hinhanh"=>$objItem->picture,
             "gioithieu"=>$objItem->preview,
             "chitiet"=>$objItem->detail,
+            "text"=>$objItem->text,
             "ngaytao"=>$objItem->date,
             "luotxem"=>0,
             "nguon"=>$objItem->link,
@@ -222,5 +232,10 @@ class TintucController extends Controller
         }
         $this->AtModel->delTintucrss($arId);
         return redirect()->back()->with(['msg'=>'Xóa thành công !']);
+    }
+    public function xemthu(Request $req){
+        $tintuc_rss_id = $req->id;
+        $objItem = DB::table('tintuc_rss')->where('id',$tintuc_rss_id)->first();
+        return $objItem->detail;
     }
 }

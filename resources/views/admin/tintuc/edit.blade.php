@@ -38,6 +38,7 @@
     $tentintuc=$objItem->tentintuc;
     $danhmuc_id=$objItem->danhmuc_id;
     $gioithieu=$objItem->gioithieu;
+    $text=trim($objItem->text);
     $chitiet=$objItem->chitiet;
     $hinhanh=$objItem->hinhanh;
     $active=$objItem->active;
@@ -107,6 +108,19 @@
                 </div>
                 @endif
                 <textarea name="gioithieu" class="form-control" rows="3" placeholder="Nhập giới thiệu tin tức...">@if(old('gioithieu')){{ old('gioithieu') }}@else{!!$gioithieu!!}@endif</textarea>
+            </div>
+            <!-- Text -->
+            <div class="form-group">
+                <label>Text</label>
+                @if ($errors->has('text'))
+                <div class="alert alert-danger alert-dismissible loi">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    @foreach ($loi['text'] as $error)
+                        <p><i class="icon fa fa-ban"></i>{{$error}}</p>
+                    @endforeach
+                </div>
+                @endif
+                <textarea name="text" class="form-control" rows="3" placeholder="Nhập text tin tức...">@if(old('text')){{ old('text') }}@else{!!$text!!}@endif</textarea>
             </div>
             <!-- Chi tiet -->
             <div class="form-group">

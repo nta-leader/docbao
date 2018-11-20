@@ -144,6 +144,7 @@
                                 @else
                                     <a class="btn btn-danger">Tin này đã có</a>
                                 @endif
+                                    <br><br><a onclick="xemthu('{{ $id }}')" data-toggle="modal" data-target="#modal-xemthu" class="btn btn-success btn-md" title="Xem thử">Xem thử</a>
                                 </td>
                                 <td>
                                     <center>
@@ -239,6 +240,32 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="modal-xemthu" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content border_radius">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h3 class="modal-title" style="color:#00a65a;" id="name">Xem thử</h3>
+        </div>
+        <style type="text/css">
+            img{
+                max-width: 100%;
+            }
+        </style>
+        <div class="modal-body" id="xemthu">
+        
+        </div>
+        <div class="modal-footer center">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 @endsection
 @section('js')
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -273,10 +300,7 @@
 </script>
 <script>
     $('#click').click(function(){   
-        $('#ajax_loader').css( 'display', 'block' );
-            setTimeout(function(){
-            $('#ajax_loader').css( 'display', 'none' );
-        }, 20000);        
+        $('#ajax_loader').css( 'display', 'block' );     
     });
     function active(tintuc_rss_id,danhmuc_id,tendanhmuc){
         swal({   
@@ -314,6 +338,22 @@
                 }
             }
         );
+    }
+    function xemthu(id){
+        $.ajax({
+            url: '{{route('admin.tintuc.rss.xemthu')}}',
+            type: 'get',
+            cache: false,
+            data: {
+                id:id,
+            },
+            success: function(data){
+                $("#xemthu").html(data);
+            },
+            error: function (){
+                swal("Có lỗi xảy ra !","","error");
+            }
+        });
     }
 </script>
 @endsection
