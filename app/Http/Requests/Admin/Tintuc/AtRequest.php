@@ -28,6 +28,7 @@ class AtRequest extends FormRequest
             "danhmuc_id"=>"required",
             "hinhanh"=>"required | image | max:10240",
             "gioithieu"=>"required",
+            "text"=>"required",
             "chitiet"=>"required",
             "active"=>"required"
         ];
@@ -44,6 +45,7 @@ class AtRequest extends FormRequest
             "hinhanh.image"=>"Chọn file đúng định dạng hình ảnh !",
             "hinhanh.max"=>"Kích thước file quá lớn( Chọn file nhỏ hơn 10MB ) !",
             "gioithieu.required"=>"Vui lòng nhập giới thiệu !",
+            "text.required"=>"Vui lòng nhập text !",
             "chitiet.required"=>"Vui lòng nhập chi tiết !",
             "active.required"=>"Vui lòng chọn trạng thái !"
         ];

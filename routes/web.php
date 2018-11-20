@@ -1,13 +1,20 @@
 <?php
 Route::namespace('Docbao')->group(function(){
-    Route::get('/',function(){
-        $html=file_get_html("http://chatkt.hexat.com");
-        return $html;
-    });
-    Route::get('list_dm',[
-        'uses'=>'IndexController@list_dm',
-        'as'=>'docbao.list_dm'
+    Route::get('/',[
+        'uses'=>'IndexController@home',
+        'as'=>"docbao"
     ]);
+    Route::get('dm_cha',[
+        'uses'=>'IndexController@dm_cha',
+        'as'=>'docbao.dm_cha'
+    ]);
+    Route::get('dm_con',[
+        'uses'=>'IndexController@dm_con',
+        'as'=>'docbao.dm_com'
+    ]);
+   /* Route::get('dm_con',function(){
+        return substr(md5(time()),0,5);
+    });*/
     Route::get('/{id}',[
         'uses'=>'IndexController@index',
         'as'=>'docbao.index'
@@ -84,7 +91,7 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
             'uses'=>'TintucController@rss',
             'as'=>'admin.tintuc.rss'
         ]);
-        Route::post('add',[
+        Route::post('addrss',[
             'uses'=>'TintucController@addrss',
             'as'=>'admin.tintuc.rss.add'
         ]);
@@ -104,6 +111,10 @@ Route::namespace('Admin')->prefix('admin')->group(function(){
         Route::get('tintuc_rss/del/{id}',[
             'uses'=>'TintucController@tintucrssdel',
             'as'=>'admin.tintuc.rss.tintucdel'
+        ]);
+        Route::get('xemthu',[
+            'uses'=>'TintucController@xemthu',
+            'as'=>'admin.tintuc.rss.xemthu'
         ]);
     });
 });

@@ -10,8 +10,21 @@ use DB;
 
 class IndexController extends Controller
 {
-    public function list_dm(AdModel $cat){
-        $arItem=DB::table('danhmuc')->get();
+    public function home(){
+        return view('docbao.index');
+    }
+    public function dm_cha(AdModel $cat){
+        $arItem=DB::table('danhmuc')->where('parent_id',0)->get();
+        $responsecode = 200;
+        $header = array (
+                'Content-Type' => 'application/json; charset=UTF-8',
+                'charset' => 'utf-8'
+            );
+        $json=response()->json($arItem , $responsecode, $header, JSON_UNESCAPED_UNICODE);
+        return $json;
+    }
+    public function dm_con(AdModel $cat){
+        $arItem=DB::table('danhmuc')->where('parent_id','!=',0)->get();
         $responsecode = 200;
         $header = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
@@ -52,7 +65,7 @@ class IndexController extends Controller
         return $json;
     }
     public function detail($id){
-        $arItem=DB::table('tintuc')->where('active',1)->where('tintuc_id',$id)->select('tintuc_id','tentintuc','chitiet','hinhanh')->first();
+        $arItem=DB::table('tintuc')->where('active',1)->where('tintuc_id',$id)->select('tintuc_id','tentintuc','chitiet','text','hinhanh')->first();
         $responsecode = 200;
         $header = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
