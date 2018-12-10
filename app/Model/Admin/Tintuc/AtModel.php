@@ -17,7 +17,7 @@ class AtModel extends Model
             ->leftjoin("danhmuc as dm","tt.danhmuc_id","=","dm.danhmuc_id")
             ->select("tt.tintuc_id","tt.tentintuc","tt.gioithieu","tt.ngaytao","tt.active","tt.hinhanh","tt.luotxem","tt.nguon","dm.tendanhmuc")
             ->orderBy('tt.tintuc_id','DESC')
-            ->paginate(getenv('PAGE_ADMIN'));
+            ->get();
     }
     public function add($arItem){
         return $this->insertGetId($arItem);

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'fulname', 'email', 'facebook', 'active'
     ];
 
     /**
@@ -27,4 +27,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function getRememberToken(){
+        return null;
+    }
+    public function setRememberToken($token){
+        $token=null;
+    }
 }

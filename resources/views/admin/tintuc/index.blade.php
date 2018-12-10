@@ -30,13 +30,6 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title" style="display: block;text-align: center;">
-                        @if(isset($_GET['Page']))
-                            {{getenv("PAGE_ADMIN")}} tin tiếp theo
-                        @else
-                        {{getenv("PAGE_ADMIN")}} tin mới nhât
-                        @endif
-                    </h3>
                     <h3 class="box-title">
                         <a href="{{route("admin.tintuc.add")}}" class="btn btn-success btn-md" title="Thêm danh mục cha">Thêm</a>
                         <a href="{{route("admin.tintuc.rss",["id"=>"0"])}}" class="btn btn-success btn-md" title="Thêm danh mục cha">RSS</a>
@@ -110,7 +103,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <button type="submit" onclick="return confirm('Bạn thực sự muốn xóa các bản ghi đã chọn?')" class="btn btn-danger">Xóa các tin đã chọn</a>
+                    <button type="submit" onclick="return confirm('Bạn thực sự muốn xóa các bản ghi đã chọn?')" class="btn btn-danger">Xóa các tin đã chọn</button>
                 </div>
                 </form>
                 <!-- /.box-body -->

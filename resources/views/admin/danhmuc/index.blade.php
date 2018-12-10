@@ -71,7 +71,7 @@
                                 @php
                                     $dmcon_id=$Item->danhmuc_id;
                                     $name_con=$Item->tendanhmuc;
-                                    $soluong_con=$soluong[$objItem->danhmuc_id];
+                                    $soluong_con=$soluong[$Item->danhmuc_id];
                                     $sx_con=$Item->sapxep;
                                     $parent_id=$Item->parent_id;
                                     $urlDel_con=route('admin.danhmuc.del',['id'=>$dmcon_id]);
