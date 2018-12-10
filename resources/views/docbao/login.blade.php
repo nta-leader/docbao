@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,11 +71,17 @@
 </head>
 <body>
 	<div class="login">
-		<form>
+		<form action="{{ route('auth.login') }}" method="post">
+		{{csrf_field()}}
 			<div class="header">
 				<h3>Đăng nhập tài khoản</h3>
 			</div>
 			<div class="body">
+				@if(Session::has('msg'))
+				<div class="input">
+					<h3 style="color:#ff7474;">{{ Session::get('msg') }}</h3>
+				</div>
+				@endif
 				<div class="input">
 					<h3>Tên tài khoản</h3>
 					<input type="text" name="username">

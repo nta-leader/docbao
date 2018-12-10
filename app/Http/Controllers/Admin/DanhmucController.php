@@ -17,7 +17,7 @@ class DanhmucController extends Controller
 		$danhmucall=$this->AdModel->getAll();
 		$soluong[]="";
 		foreach ($danhmucall as $key => $value) {
-			$soluong[$value->danhmuc_id]=rand(1,100);
+			$soluong[$value->danhmuc_id]=$this->AdModel->demTintuc($value->danhmuc_id);
 		}
         return view('admin.danhmuc.index',compact('objDanhmuccha','objDanhmuccon','soluong'));
     }

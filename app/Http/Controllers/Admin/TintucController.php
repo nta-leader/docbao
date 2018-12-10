@@ -49,7 +49,7 @@ class TintucController extends Controller
             "active"=>trim($req->active)
         ];
         $this->AtModel->add($arItem);
-        return redirect()->back()->with(['msg'=>'Thêm tin tức thành công !']);
+        return redirect()->route('admin.tintuc.index')->with(['msg'=>'Thêm tin tức thành công !']);
     }
     public function edit($tintuc_id){
         $objDanhmuccha=$this->AdModel->getList_cha();
@@ -89,7 +89,7 @@ class TintucController extends Controller
             "active"=>trim($req->active)
         ];
         $this->AtModel->edit($tintuc_id,$arItem);
-        return redirect()->back()->with(['msg'=>'Sửa tin tức thành công !']);
+        return redirect()->route('admin.tintuc.index')->with(['msg'=>'Sửa tin tức thành công !']);
     }
     public function del($tintuc_id,Request $req){
         if($tintuc_id==0){
@@ -154,7 +154,7 @@ class TintucController extends Controller
         foreach ($tins as $t) {
             $a = $t->find("a",0);
             //lay tieu de
-            $tentintuc=$a->attr["title"];
+            $tentintuc=$a->title;
             if($this->AtModel->check_rss($tentintuc)==false){
                 continue;
             }
@@ -168,6 +168,8 @@ class TintucController extends Controller
             if($duoiP == 'jpg' || $duoiP == 'png' || $duoiP == 'jpeg' || $duoiP == 'jpf'){
                 $u=$_SERVER['DOCUMENT_ROOT'].'/storage/app/files/'.$picture;
                 file_put_contents($u, file_get_contents($img));
+            }else{
+                continue;
             }
             //lay gioi thieu
             $goithieu=$t->find("div.mr1 div",0)->plaintext;
